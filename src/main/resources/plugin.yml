@@ -1,6 +1,6 @@
 name: RemoTweaks
 version: 1.0.0
-main: ru.daniar.remotweaks.RemoTweaks
+main: su.remo.tweaks.RemoTweaks
 api-version: '1.21'
 author: daniar
 description: Full-featured Vanilla+ quality of life plugin for SMP servers.
