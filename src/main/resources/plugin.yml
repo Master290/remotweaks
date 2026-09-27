@@ -1,0 +1,98 @@
+name: RemoTweaks
+version: 1.0.0
+main: ru.daniar.remotweaks.RemoTweaks
+api-version: '1.21'
+author: daniar
+description: Full-featured Vanilla+ quality of life plugin for SMP servers.
+
+commands:
+  sit:
+    description: Сесть на землю или текущий блок
+    permission: remotweaks.sit
+    permission-message: §cУ вас нет прав для использования этой команды!
+  trade:
+    description: Безопасный обмен предметами с игроком
+    permission: remotweaks.trade
+    permission-message: §cУ вас нет прав для использования этой команды!
+  sort:
+    description: Сортировка открытого контейнера или личного инвентаря
+    aliases: [invsort, isort]
+    permission: remotweaks.sort
+    permission-message: §cУ вас нет прав для использования этой команды!
+  bottle:
+    description: Упаковка опыта в пузырьки опыта
+    aliases: [xpbottle]
+    permission: remotweaks.bottle
+    permission-message: §cУ вас нет прав для использования этой команды!
+  stats:
+    description: Просмотр игровой статистики и времени в игре
+    aliases: [playtime, stat]
+    permission: remotweaks.stats
+    permission-message: §cУ вас нет прав для использования этой команды!
+  remotweaks:
+    description: Основная команда управления плагином RemoTweaks
+    aliases: [rt]
+    permission: remotweaks.admin
+    permission-message: §cУ вас нет прав для использования этой команды!
+
+permissions:
+  remotweaks.sit:
+    description: Позволяет использовать команду /sit и садиться на блоки
+    default: true
+  remotweaks.ride:
+    description: Позволяет садиться на плечи другим игрокам
+    default: true
+  remotweaks.trade:
+    description: Позволяет безопасно обмениваться предметами
+    default: true
+  remotweaks.harvest:
+    description: Позволяет собирать и пересаживать урожай кликом ПКМ
+    default: true
+  remotweaks.choptree:
+    description: Позволяет срубать деревья целиком топором с зажатым Shift
+    default: true
+  remotweaks.mobpickup:
+    description: Позволяет брать жителей и животных на руки (Shift + ПКМ)
+    default: true
+  remotweaks.showitem:
+    description: Позволяет показывать предмет в чате через [item] или [hand]
+    default: true
+  remotweaks.frames:
+    description: Позволяет переключать видимость рамок
+    default: true
+  remotweaks.armorstand:
+    description: Позволяет открывать редактор стоек для брони
+    default: true
+  remotweaks.armorswap:
+    description: Позволяет быстро менять сет брони со стойкой
+    default: true
+  remotweaks.beehive:
+    description: Позволяет осматривать ульи и количество пчёл
+    default: true
+  remotweaks.colors.anvil:
+    description: Позволяет использовать цветовые коды на наковальне
+    default: true
+  remotweaks.colors.signs:
+    description: Позволяет использовать цветовые коды на табличках
+    default: true
+  remotweaks.sort:
+    description: Позволяет использовать авто-сортировку сундуков и инвентаря
+    default: true
+  remotweaks.potionstack:
+    description: Позволяет стакать зелья до 16 штук
+    default: true
+  remotweaks.shulkeropen:
+    description: Позволяет открывать шалкеры из руки и инвентаря
+    default: true
+  remotweaks.bottle:
+    description: Позволяет упаковывать опыт в пузырьки
+    default: true
+  remotweaks.mention:
+    description: Позволяет упоминать игроков в чате со звуком
+    default: true
+  remotweaks.stats:
+    description: Позволяет просматривать игровую статистику
+    default: true
+  remotweaks.admin:
+    description: Административные команды плагина
+    default: op

@@ -1,0 +1,146 @@
+# ========================================================
+#            RemoTweaks - Конфигурация плагина
+# ========================================================
+
+# 1. Настройки сидения (Sit)
+sitting:
+  enabled: true
+  block-click: true
+  offset: 0.025
+  stairs-xz-offset: 0.12
+  messages:
+    already-sitting: "&cВы уже сидите!"
+    seat-occupied: "&cЭто место уже занято!"
+    cannot-sit-here: "&cЗдесь нельзя сесть!"
+    cannot-sit-air: "&cВы не можете сесть в воздухе!"
+
+# 2. Сидение на плечах других игроков (Shift + ПКМ пустой рукой)
+player-riding:
+  enabled: true
+
+# 3. Синхронные двойные двери (клик по одной открывает обе)
+double-doors:
+  enabled: true
+
+# 4. Авто-сбор и пересадка созревшего урожая (ПКМ)
+harvest:
+  enabled: true
+
+# 5. Срубание дерева целиком топором с Shift (ChopTree)
+chop-tree:
+  enabled: true
+  max-blocks: 150
+
+# 6. Переноска жителей и мирных мобов на руках (Shift + ПКМ пустой рукой)
+mob-pickup:
+  enabled: true
+
+# 7. Показ предмета в чате через [item] или [hand]
+chat-show-item:
+  enabled: true
+
+# 8. Защита от случайного выбрасывания ценных предметов (Q)
+drop-protection:
+  enabled: true
+  message: "&c[!] Нажмите Q ещё раз в течение 2 сек для подтверждения!"
+
+# 9. Умный AFK статус (авто-исключение спящих из формулы сна)
+afk:
+  enabled: true
+  timeout-seconds: 300
+
+# 10. Координаты смерти игроку в чат
+death-coordinates:
+  enabled: true
+  message: "&c☠ Место вашей смерти: &6{world} &7[&eX: {x}, Y: {y}, Z: {z}&7]"
+
+# 11. Выпадение голов игроков при PvP убийстве
+pvp-head-drops:
+  enabled: true
+
+# 12. Защита прирученных питомцев от случайного урона владельцем
+pet-protection:
+  enabled: true
+
+# 13. Редактор стоек для брони (Shift + ПКМ пустой рукой по стойке)
+armor-stand-editor:
+  enabled: true
+
+# 14. Безопасный обмен предметами между игроками (/trade <ник>)
+trade:
+  enabled: true
+  max-distance: 15.0
+
+# 15. Настройки невидимых рамок (Invisible Item Frames)
+invisible-frames:
+  enabled: true
+  tool: "SHEARS"
+  require-sneak: true
+  play-sound: true
+  messages:
+    frame-invisible: "&aРамка скрыта!"
+    frame-visible: "&eРамка снова видима!"
+
+# 16. Настройки плавного сна (Smooth Sleep Timelapse)
+sleep:
+  enabled: true
+  percentage: 20
+  min-players: 1
+  speed: 80
+  clear-weather: true
+  actionbar:
+    enabled: true
+    sleeping-message: "&eСпят: &6{sleeping}&e/&6{needed} &7(&a{percent}%&7) 🌙"
+    skipping-message: "&aНочь проходит... &7({sleeping} спят) 🌅"
+    morning-message: "&6Доброе утро! ☀️"
+
+# 17. Быстрая смена брони со стойкой (Shift + ПКМ с предметом брони или через меню)
+armor-stand-swap:
+  enabled: true
+
+# 18. Осмотр ульев и пчёл (Shift + ПКМ пустой рукой по улью)
+beehive-inspector:
+  enabled: true
+  actionbar-message: "&6🍯 Мёд: &e{honey}/{max_honey}{ready} &7| &6🐝 Пчёл внутри: &e{bees}/{max_bees}"
+  ready-suffix: " &a(Готов к сбору!)"
+
+# 19. Цветовые коды (&) на наковальне и табличках
+color-codes:
+  anvil: true
+  signs: true
+
+# 20. Авто-сортировка сундуков (клик колесиком или Shift+клик по пустой ячейке, /sort)
+chest-sort:
+  enabled: true
+  messages:
+    sorted-chest: "&a✔ Контейнер отсортирован!"
+    sorted-inventory: "&a✔ Инвентарь отсортирован!"
+
+# 21. Стакаемые зелья (до 16 шт. в стаке)
+potion-stacking:
+  enabled: true
+
+# 22. Быстрое открытие шалкеров из руки и инвентаря (ПКМ в воздух / Shift+ПКМ)
+shulker-quick-open:
+  enabled: true
+
+# 23. Упаковка опыта в пузырьки (Shift + ПКМ бутылочкой по столу чар или /bottle)
+exp-bottling:
+  enabled: true
+  cost-per-bottle: 10
+
+# 24. Упоминания игроков в чате (@ник) со звуком и подсветкой
+chat-mention:
+  enabled: true
+  actionbar: "&e🔔 Вас упомянул &6{player} &eв чате!"
+
+# 25. Быстрое опадание листвы после сруба дерева (Fast Leaf Decay)
+fast-leaf-decay:
+  enabled: true
+  spawn-particles: true
+  play-sound: true
+
+# Общие сообщения
+messages:
+  no-permission: "&cУ вас нет прав для выполнения этой команды!"
+  reload-success: "&aКонфигурация RemoTweaks успешно перезагружена!"
