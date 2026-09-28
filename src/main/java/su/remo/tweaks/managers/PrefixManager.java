@@ -306,19 +306,33 @@ public class PrefixManager {
         }
 
         Team team = sb.getTeam(teamName);
+        UUID uuid = player.getUniqueId();
+        Component prefixComp = getPrefixComponent(uuid);
+        Component suffixComp = getSuffixComponent(uuid);
+        boolean glowing = isGlowing(uuid);
+
+        boolean hasCustomization = (!prefixComp.equals(Component.empty())) || (!suffixComp.equals(Component.empty())) || glowing;
+
+        if (!hasCustomization) {
+            if (team != null) {
+                team.removeEntry(name);
+            }
+            return;
+        }
+
         if (team == null) {
             team = sb.registerNewTeam(teamName);
         }
 
-        UUID uuid = player.getUniqueId();
-        Component prefixComp = getPrefixComponent(uuid);
-        Component suffixComp = getSuffixComponent(uuid);
-
         team.prefix(prefixComp);
         team.suffix(suffixComp);
 
-        NamedTextColor glowColor = getGlowNamedColor(uuid);
-        team.color(glowColor);
+        if (glowing) {
+            NamedTextColor glowColor = getGlowNamedColor(uuid);
+            team.color(glowColor);
+        } else {
+            team.color(NamedTextColor.WHITE);
+        }
 
         if (!team.hasEntry(name)) {
             team.addEntry(name);
