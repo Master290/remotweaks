@@ -201,6 +201,32 @@ ruler:
   enabled: true
   allow-stick-sneak: true
 
+# 35. Передача предметов из рук в руки (Shift + ПКМ с предметом)
+item-gifting:
+  enabled: true
+
+# 36. Городская доска объявлений (/board)
+notice-board:
+  enabled: true
+  max-ads-per-player: 3
+  max-length: 150
+  retention-days: 14
+
+# 37. Уют у костра (Campfire Rest & Chat)
+campfire-rest:
+  enabled: true
+  radius: 5.0
+  chat-enabled: true
+  chat-radius: 20.0
+  regen-interval-seconds: 4
+
+# 38. Демократические голосования и опросы (/poll)
+polls:
+  enabled: true
+  default-duration-minutes: 1440
+  max-active-polls: 10
+  min-question-length: 5
+
 # Общие сообщения
 messages:
   no-permission: "&cУ вас нет прав для выполнения этой команды!"

@@ -82,6 +82,16 @@ commands:
   grave:
     description: Просмотр координат ваших могил
     aliases: [graves]
+  board:
+    description: Городская доска объявлений сервера
+    aliases: [bulletin, notices, doska]
+    permission: remotweaks.board
+    permission-message: §cУ вас нет прав для использования этой команды!
+  poll:
+    description: Демократические голосования и опросы игроков
+    aliases: [polls, vote, opros]
+    permission: remotweaks.poll
+    permission-message: §cУ вас нет прав для использования этой команды!
 
 permissions:
   remotweaks.sit:
@@ -156,3 +166,25 @@ permissions:
   remotweaks.admin:
     description: Административные команды плагина
     default: op
+  remotweaks.itemgift:
+    description: Позволяет передавать предметы из рук в руки (Shift + ПКМ)
+    default: true
+  remotweaks.board:
+    description: Позволяет просматривать и размещать объявления на доске
+    default: true
+  remotweaks.board.admin:
+    description: Позволяет модерировать и удалять любые объявления на доске
+    default: op
+  remotweaks.campfire:
+    description: Позволяет получать уют и отдых у костра
+    default: true
+  remotweaks.poll:
+    description: Позволяет участвовать в голосованиях и опросах
+    default: true
+  remotweaks.poll.create:
+    description: Позволяет создавать голосования и опросы
+    default: true
+  remotweaks.poll.admin:
+    description: Позволяет завершать и модерировать любые голосования
+    default: op
+

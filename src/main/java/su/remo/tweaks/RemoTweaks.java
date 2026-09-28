@@ -5,10 +5,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import su.remo.tweaks.commands.*;
 import su.remo.tweaks.listeners.*;
 import su.remo.tweaks.managers.AFKManager;
+import su.remo.tweaks.managers.BoardManager;
+import su.remo.tweaks.managers.CampfireManager;
 import su.remo.tweaks.managers.GraveManager;
 import su.remo.tweaks.managers.LockManager;
 import su.remo.tweaks.managers.MailManager;
 import su.remo.tweaks.managers.MsgManager;
+import su.remo.tweaks.managers.PollManager;
 import su.remo.tweaks.managers.PrefixManager;
 import su.remo.tweaks.managers.RulerManager;
 import su.remo.tweaks.managers.SitManager;
@@ -30,6 +33,9 @@ public class RemoTweaks extends JavaPlugin {
     private MailManager mailManager;
     private GraveManager graveManager;
     private RulerManager rulerManager;
+    private BoardManager boardManager;
+    private CampfireManager campfireManager;
+    private PollManager pollManager;
     private ChunkBorderCommand chunkBorderCommand;
     private ShulkerQuickOpenListener shulkerQuickOpenListener;
     private FastLeafDecayListener fastLeafDecayListener;
@@ -53,6 +59,9 @@ public class RemoTweaks extends JavaPlugin {
         this.mailManager = new MailManager(this);
         this.graveManager = new GraveManager(this);
         this.rulerManager = new RulerManager(this);
+        this.boardManager = new BoardManager(this);
+        this.campfireManager = new CampfireManager(this);
+        this.pollManager = new PollManager(this);
 
         // Регистрация слушателей событий
         var pm = getServer().getPluginManager();
@@ -87,6 +96,8 @@ public class RemoTweaks extends JavaPlugin {
         pm.registerEvents(new ChatMentionListener(this), this);
         this.fastLeafDecayListener = new FastLeafDecayListener(this);
         pm.registerEvents(fastLeafDecayListener, this);
+        pm.registerEvents(new ItemGiftListener(this), this);
+        pm.registerEvents(new BoardSignListener(this), this);
 
         // Регистрация команд
         if (getCommand("sit") != null) {
@@ -186,12 +197,28 @@ public class RemoTweaks extends JavaPlugin {
             getCommand("grave").setExecutor(graveCmd);
             getCommand("grave").setTabCompleter(graveCmd);
         }
+        if (getCommand("board") != null) {
+            var boardCmd = new BoardCommand(this, boardManager);
+            getCommand("board").setExecutor(boardCmd);
+            getCommand("board").setTabCompleter(boardCmd);
+        }
+        if (getCommand("poll") != null) {
+            var pollCmd = new PollCommand(this, pollManager);
+            getCommand("poll").setExecutor(pollCmd);
+            getCommand("poll").setTabCompleter(pollCmd);
+        }
 
         getLogger().info("RemoTweaks успешно запущен! Все Vanilla+ функции активированы.");
     }
 
     @Override
     public void onDisable() {
+        if (campfireManager != null) {
+            campfireManager.cleanup();
+        }
+        if (pollManager != null) {
+            pollManager.cleanup();
+        }
         if (chunkBorderCommand != null) {
             chunkBorderCommand.cleanup();
         }
@@ -276,6 +303,18 @@ public class RemoTweaks extends JavaPlugin {
 
     public RulerManager getRulerManager() {
         return rulerManager;
+    }
+
+    public BoardManager getBoardManager() {
+        return boardManager;
+    }
+
+    public CampfireManager getCampfireManager() {
+        return campfireManager;
+    }
+
+    public PollManager getPollManager() {
+        return pollManager;
     }
 
     public String color(String message) {

@@ -37,26 +37,51 @@ public class PrefixChatListener implements Listener {
                 event.message(event.message().replaceText(b -> b.match("^!\\s*").replacement("")));
                 chatChannelTag = Component.text("[G] ", NamedTextColor.GOLD);
             } else {
-                chatChannelTag = Component.text("[L] ", NamedTextColor.GRAY);
+                boolean campfireChat = plugin.getCampfireManager() != null && plugin.getCampfireManager().isNearLitCampfire(player);
+                if (campfireChat) {
+                    chatChannelTag = Component.text("[У костра] ", NamedTextColor.GOLD);
 
-                double radius = plugin.getConfig().getDouble("chat.local-global.radius", 100.0);
-                double radiusSq = radius * radius;
+                    double radius = plugin.getConfig().getDouble("campfire-rest.chat-radius", 20.0);
+                    double radiusSq = radius * radius;
 
-                int recipientCount = 0;
-                var it = event.viewers().iterator();
-                while (it.hasNext()) {
-                    var viewer = it.next();
-                    if (viewer instanceof Player p) {
-                        if (!p.getWorld().equals(player.getWorld()) || p.getLocation().distanceSquared(player.getLocation()) > radiusSq) {
-                            it.remove();
-                        } else {
-                            recipientCount++;
+                    int recipientCount = 0;
+                    var it = event.viewers().iterator();
+                    while (it.hasNext()) {
+                        var viewer = it.next();
+                        if (viewer instanceof Player p) {
+                            if (!p.getWorld().equals(player.getWorld()) || p.getLocation().distanceSquared(player.getLocation()) > radiusSq) {
+                                it.remove();
+                            } else {
+                                recipientCount++;
+                            }
                         }
                     }
-                }
 
-                if (recipientCount <= 1) {
-                    player.sendActionBar(plugin.color("&7[L] Вас никто не услышал... (используйте !текст для глобального чата)"));
+                    if (recipientCount <= 1) {
+                        player.sendActionBar(plugin.color("&7[У костра] Вас слышат только те, кто греется у огня... (используйте !текст для глобального)"));
+                    }
+                } else {
+                    chatChannelTag = Component.text("[L] ", NamedTextColor.GRAY);
+
+                    double radius = plugin.getConfig().getDouble("chat.local-global.radius", 100.0);
+                    double radiusSq = radius * radius;
+
+                    int recipientCount = 0;
+                    var it = event.viewers().iterator();
+                    while (it.hasNext()) {
+                        var viewer = it.next();
+                        if (viewer instanceof Player p) {
+                            if (!p.getWorld().equals(player.getWorld()) || p.getLocation().distanceSquared(player.getLocation()) > radiusSq) {
+                                it.remove();
+                            } else {
+                                recipientCount++;
+                            }
+                        }
+                    }
+
+                    if (recipientCount <= 1) {
+                        player.sendActionBar(plugin.color("&7[L] Вас никто не услышал... (используйте !текст для глобального чата)"));
+                    }
                 }
             }
         }
