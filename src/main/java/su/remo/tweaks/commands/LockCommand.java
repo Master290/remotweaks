@@ -63,6 +63,14 @@ public class LockCommand implements CommandExecutor, TabCompleter {
                 }
 
                 String friend = args[1];
+                List<String> allowed = plugin.getLockManager().getAllowedUsers(target);
+                for (String u : allowed) {
+                    if (u.equalsIgnoreCase(friend)) {
+                        player.sendMessage(Component.text("Игрок " + friend + " уже имеет доступ к этому замку!", NamedTextColor.YELLOW));
+                        return true;
+                    }
+                }
+
                 boolean added = plugin.getLockManager().addFriend(sign, friend);
                 if (added) {
                     player.sendMessage(Component.text("✔ Игрок " + friend + " успешно добавлен в замок!", NamedTextColor.GREEN));
@@ -119,9 +127,17 @@ public class LockCommand implements CommandExecutor, TabCompleter {
                 String owner = plugin.getLockManager().getOwner(target);
                 List<String> allowed = plugin.getLockManager().getAllowedUsers(target);
 
+                List<String> friends = new ArrayList<>();
+                if (allowed.size() > 1) {
+                    for (int i = 1; i < allowed.size(); i++) {
+                        friends.add(allowed.get(i));
+                    }
+                }
+                String friendsStr = friends.isEmpty() ? "только владелец" : String.join(", ", friends);
+
                 player.sendMessage(Component.text("=== Информация о замке ===", NamedTextColor.GOLD));
-                player.sendMessage(Component.text("Владелец: ", NamedTextColor.YELLOW).append(Component.text(owner, NamedTextColor.WHITE)));
-                player.sendMessage(Component.text("Доступ имеют: ", NamedTextColor.YELLOW).append(Component.text(String.join(", ", allowed), NamedTextColor.GREEN)));
+                player.sendMessage(Component.text("Владелец: ", NamedTextColor.YELLOW).append(Component.text(owner != null ? owner : "Неизвестно", NamedTextColor.WHITE)));
+                player.sendMessage(Component.text("Друзья с доступом: ", NamedTextColor.YELLOW).append(Component.text(friendsStr, NamedTextColor.GREEN)));
                 return true;
             }
 
@@ -134,7 +150,7 @@ public class LockCommand implements CommandExecutor, TabCompleter {
 
     private void sendHelp(Player player, String label) {
         player.sendMessage(Component.text("=== Защита сундуков и дверей ===", NamedTextColor.GOLD));
-        player.sendMessage(Component.text("Повесьте табличку с первой строкой [приват] на сундук или дверь.", NamedTextColor.GRAY));
+        player.sendMessage(Component.text("Повесьте табличку со строкой [приват] на сундук или дверь.", NamedTextColor.GRAY));
         player.sendMessage(Component.text("/" + label + " add <друг> - Добавить друга в замок", NamedTextColor.YELLOW));
         player.sendMessage(Component.text("/" + label + " remove <друг> - Удалить друга из замка", NamedTextColor.YELLOW));
         player.sendMessage(Component.text("/" + label + " info - Проверить информацию о замке", NamedTextColor.YELLOW));
