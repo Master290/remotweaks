@@ -2,11 +2,13 @@ package su.remo.tweaks;
 
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+import su.remo.tweaks.commands.PrefixCommand;
 import su.remo.tweaks.commands.SitCommand;
 import su.remo.tweaks.commands.TradeCommand;
 import su.remo.tweaks.commands.RemoTweaksCommand;
 import su.remo.tweaks.listeners.*;
 import su.remo.tweaks.managers.AFKManager;
+import su.remo.tweaks.managers.PrefixManager;
 import su.remo.tweaks.managers.SitManager;
 import su.remo.tweaks.managers.SleepManager;
 import su.remo.tweaks.managers.TabListManager;
@@ -20,6 +22,7 @@ public class RemoTweaks extends JavaPlugin {
     private TradeManager tradeManager;
     private AFKManager afkManager;
     private TabListManager tabListManager;
+    private PrefixManager prefixManager;
     private ShulkerQuickOpenListener shulkerQuickOpenListener;
     private FastLeafDecayListener fastLeafDecayListener;
 
@@ -35,10 +38,12 @@ public class RemoTweaks extends JavaPlugin {
         this.afkManager = new AFKManager(this);
         this.sleepManager = new SleepManager(this);
         this.tradeManager = new TradeManager(this);
+        this.prefixManager = new PrefixManager(this);
         this.tabListManager = new TabListManager(this);
 
         // Регистрация слушателей событий
         var pm = getServer().getPluginManager();
+        pm.registerEvents(new PrefixChatListener(this), this);
         pm.registerEvents(new TabListListener(this), this);
         pm.registerEvents(new SitListener(this), this);
         pm.registerEvents(new ItemFrameListener(this), this);
@@ -95,6 +100,11 @@ public class RemoTweaks extends JavaPlugin {
             getCommand("stats").setExecutor(statsCmd);
             getCommand("stats").setTabCompleter(statsCmd);
         }
+        if (getCommand("prefix") != null) {
+            var prefixCmd = new PrefixCommand(this);
+            getCommand("prefix").setExecutor(prefixCmd);
+            getCommand("prefix").setTabCompleter(prefixCmd);
+        }
 
         getLogger().info("RemoTweaks успешно запущен! Все Vanilla+ функции активированы.");
     }
@@ -116,6 +126,9 @@ public class RemoTweaks extends JavaPlugin {
         if (afkManager != null) {
             afkManager.cleanup();
         }
+        if (prefixManager != null) {
+            prefixManager.cleanup();
+        }
         if (tabListManager != null) {
             tabListManager.cleanup();
         }
@@ -124,6 +137,10 @@ public class RemoTweaks extends JavaPlugin {
 
     public static RemoTweaks getInstance() {
         return instance;
+    }
+
+    public PrefixManager getPrefixManager() {
+        return prefixManager;
     }
 
     public TabListManager getTabListManager() {

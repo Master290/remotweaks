@@ -104,12 +104,19 @@ public class TabListManager {
         boolean showPingInName = plugin.getConfig().getBoolean("tablist.player-format.show-ping-in-name", false);
         boolean isAfk = plugin.getAfkManager() != null && plugin.getAfkManager().isAfk(player);
 
-        Component comp;
+        Component comp = Component.empty();
         if (isAfk) {
-            comp = Component.text("[AFK] ", NamedTextColor.GRAY).append(Component.text(player.getName(), NamedTextColor.WHITE));
-        } else {
-            comp = Component.text(player.getName(), NamedTextColor.WHITE);
+            comp = comp.append(Component.text("[AFK] ", NamedTextColor.GRAY));
         }
+
+        if (plugin.getPrefixManager() != null) {
+            Component prefix = plugin.getPrefixManager().getPrefixComponent(player.getUniqueId());
+            if (!prefix.equals(Component.empty())) {
+                comp = comp.append(prefix);
+            }
+        }
+
+        comp = comp.append(Component.text(player.getName(), NamedTextColor.WHITE));
 
         if (showPingInName) {
             int ping = player.getPing();

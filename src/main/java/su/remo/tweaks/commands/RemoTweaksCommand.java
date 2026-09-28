@@ -27,6 +27,12 @@ public class RemoTweaksCommand implements CommandExecutor, TabCompleter {
 
         if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
             plugin.reloadConfig();
+            if (plugin.getPrefixManager() != null) {
+                plugin.getPrefixManager().load();
+                for (org.bukkit.entity.Player p : org.bukkit.Bukkit.getOnlinePlayers()) {
+                    plugin.getPrefixManager().updatePlayer(p);
+                }
+            }
             if (plugin.getTabListManager() != null) {
                 plugin.getTabListManager().reload();
             }

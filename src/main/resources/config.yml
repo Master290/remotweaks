@@ -166,6 +166,13 @@ tablist:
   player-format:
     show-ping-in-name: false
 
+# 27. Настройки префиксов игроков (/prefix set <игрок> <префикс>)
+prefixes:
+  # Отображать ли префиксы в чате (формат: <префикс><ник>: <сообщение>)
+  chat-format: true
+  # Отображать ли префиксы над головой игрока (в 3D мире)
+  nametag-format: true
+
 # Общие сообщения
 messages:
   no-permission: "&cУ вас нет прав для выполнения этой команды!"
