@@ -118,6 +118,13 @@ public class TabListManager {
 
         comp = comp.append(Component.text(player.getName(), NamedTextColor.WHITE));
 
+        if (plugin.getPrefixManager() != null) {
+            Component suffix = plugin.getPrefixManager().getSuffixComponent(player.getUniqueId());
+            if (!suffix.equals(Component.empty())) {
+                comp = comp.append(suffix);
+            }
+        }
+
         if (showPingInName) {
             int ping = player.getPing();
             NamedTextColor color = getPingNamedColor(ping);

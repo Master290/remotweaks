@@ -37,6 +37,33 @@ commands:
   prefix:
     description: Управление префиксами игроков в чате, табе и над головой
     aliases: [prefixes, setprefix]
+  suffix:
+    description: Управление суффиксами игроков в чате, табе и над головой
+    aliases: [suffixes, setsuffix]
+  glow:
+    description: Включение цветной подсветки персонажа
+    aliases: [glowing]
+  msg:
+    description: Отправить личное сообщение игроку
+    aliases: [tell, w, m]
+  r:
+    description: Быстрый ответ на последнее личное сообщение
+    aliases: [reply]
+  socialspy:
+    description: Наблюдение за личными сообщениями (для администрации)
+    aliases: [spy]
+    permission: remotweaks.socialspy
+    permission-message: §cУ вас нет прав для использования этой команды!
+  hug:
+    description: Дружески обнять игрока
+  kiss:
+    description: Поцеловать игрока
+  highfive:
+    description: Дать пять игроку
+    aliases: [five]
+  lock:
+    description: Управление замками и приватными сундуками
+    aliases: [locks, private]
 
 permissions:
   remotweaks.sit:
@@ -97,7 +124,16 @@ permissions:
     description: Позволяет просматривать игровую статистику
     default: true
   remotweaks.prefix.admin:
-    description: Позволяет устанавливать и удалять префиксы игроков
+    description: Позволяет устанавливать и удалять префиксы и суффиксы игроков
+    default: op
+  remotweaks.glow:
+    description: Позволяет использовать команду /glow для подсветки персонажа
+    default: true
+  remotweaks.socialspy:
+    description: Позволяет просматривать личные сообщения других игроков
+    default: op
+  remotweaks.lock.admin:
+    description: Позволяет открывать и ломать любые заблокированные контейнеры
     default: op
   remotweaks.admin:
     description: Административные команды плагина

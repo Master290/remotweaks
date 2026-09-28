@@ -2,12 +2,11 @@ package su.remo.tweaks;
 
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
-import su.remo.tweaks.commands.PrefixCommand;
-import su.remo.tweaks.commands.SitCommand;
-import su.remo.tweaks.commands.TradeCommand;
-import su.remo.tweaks.commands.RemoTweaksCommand;
+import su.remo.tweaks.commands.*;
 import su.remo.tweaks.listeners.*;
 import su.remo.tweaks.managers.AFKManager;
+import su.remo.tweaks.managers.LockManager;
+import su.remo.tweaks.managers.MsgManager;
 import su.remo.tweaks.managers.PrefixManager;
 import su.remo.tweaks.managers.SitManager;
 import su.remo.tweaks.managers.SleepManager;
@@ -23,6 +22,8 @@ public class RemoTweaks extends JavaPlugin {
     private AFKManager afkManager;
     private TabListManager tabListManager;
     private PrefixManager prefixManager;
+    private MsgManager msgManager;
+    private LockManager lockManager;
     private ShulkerQuickOpenListener shulkerQuickOpenListener;
     private FastLeafDecayListener fastLeafDecayListener;
 
@@ -40,9 +41,12 @@ public class RemoTweaks extends JavaPlugin {
         this.tradeManager = new TradeManager(this);
         this.prefixManager = new PrefixManager(this);
         this.tabListManager = new TabListManager(this);
+        this.msgManager = new MsgManager(this);
+        this.lockManager = new LockManager(this);
 
         // Регистрация слушателей событий
         var pm = getServer().getPluginManager();
+        pm.registerEvents(new LockListener(this), this);
         pm.registerEvents(new PrefixChatListener(this), this);
         pm.registerEvents(new TabListListener(this), this);
         pm.registerEvents(new SitListener(this), this);
@@ -104,6 +108,43 @@ public class RemoTweaks extends JavaPlugin {
             var prefixCmd = new PrefixCommand(this);
             getCommand("prefix").setExecutor(prefixCmd);
             getCommand("prefix").setTabCompleter(prefixCmd);
+        }
+        if (getCommand("suffix") != null) {
+            var suffixCmd = new SuffixCommand(this);
+            getCommand("suffix").setExecutor(suffixCmd);
+            getCommand("suffix").setTabCompleter(suffixCmd);
+        }
+        if (getCommand("glow") != null) {
+            var glowCmd = new GlowCommand(this);
+            getCommand("glow").setExecutor(glowCmd);
+            getCommand("glow").setTabCompleter(glowCmd);
+        }
+        if (getCommand("msg") != null) {
+            var msgCmd = new MsgCommand(this);
+            getCommand("msg").setExecutor(msgCmd);
+            getCommand("msg").setTabCompleter(msgCmd);
+        }
+        if (getCommand("r") != null) {
+            var replyCmd = new ReplyCommand(this);
+            getCommand("r").setExecutor(replyCmd);
+            getCommand("r").setTabCompleter(replyCmd);
+        }
+        if (getCommand("socialspy") != null) {
+            var spyCmd = new SocialSpyCommand(this);
+            getCommand("socialspy").setExecutor(spyCmd);
+            getCommand("socialspy").setTabCompleter(spyCmd);
+        }
+        EmoteCommand emoteCmd = new EmoteCommand(this);
+        for (String em : java.util.List.of("hug", "kiss", "highfive")) {
+            if (getCommand(em) != null) {
+                getCommand(em).setExecutor(emoteCmd);
+                getCommand(em).setTabCompleter(emoteCmd);
+            }
+        }
+        if (getCommand("lock") != null) {
+            var lockCmd = new LockCommand(this);
+            getCommand("lock").setExecutor(lockCmd);
+            getCommand("lock").setTabCompleter(lockCmd);
         }
 
         getLogger().info("RemoTweaks успешно запущен! Все Vanilla+ функции активированы.");
@@ -169,6 +210,14 @@ public class RemoTweaks extends JavaPlugin {
 
     public AFKManager getAfkManager() {
         return afkManager;
+    }
+
+    public MsgManager getMsgManager() {
+        return msgManager;
+    }
+
+    public LockManager getLockManager() {
+        return lockManager;
     }
 
     public String color(String message) {
