@@ -160,6 +160,9 @@ public class TabListManager {
             return Component.empty();
         }
 
+        String pingCloseTag = getPingColorCloseTag(ping);
+        String formattedPing = pingColorTag + ping + " ms" + pingCloseTag;
+
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i)
@@ -167,6 +170,9 @@ public class TabListManager {
                     .replace("{max}", String.valueOf(max))
                     .replace("{ping}", String.valueOf(ping))
                     .replace("{ping_color}", pingColorTag)
+                    .replace("{/ping_color}", pingCloseTag)
+                    .replace("</color>", pingCloseTag)
+                    .replace("{ping_formatted}", formattedPing)
                     .replace("{tps}", tps);
 
             sb.append(line);
@@ -176,6 +182,13 @@ public class TabListManager {
         }
 
         return miniMessage.deserialize(sb.toString());
+    }
+
+    public String getPingColorCloseTag(int ping) {
+        if (ping < 50) return "</green>";
+        if (ping < 120) return "</yellow>";
+        if (ping < 200) return "</gold>";
+        return "</red>";
     }
 
     public NamedTextColor getPingNamedColor(int ping) {

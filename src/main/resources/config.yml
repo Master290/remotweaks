@@ -154,7 +154,7 @@ tablist:
   # Подвал (Footer) таба
   footer:
     - ""
-    - "<gray>Онлайн: <gold>{online}</gold>/<gold>{max}</gold>  •  Ваш пинг: {ping_color}{ping} ms</color>  •  TPS: <green>{tps}</green></gray>"
+    - "<gray>Онлайн: <gold>{online}</gold>/<gold>{max}</gold>  •  Ваш пинг: {ping_color}{ping} ms{/ping_color}<gray>  •  TPS: <green>{tps}</green></gray>"
     - "<dark_gray>remo.su</dark_gray>"
     - ""
   # Цифровой пинг рядом со столбиком пинга в табе (Scoreboard DisplaySlot.PLAYER_LIST)
