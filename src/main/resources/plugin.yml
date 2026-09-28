@@ -64,6 +64,24 @@ commands:
   lock:
     description: Управление замками и приватными сундуками
     aliases: [locks, private]
+  roll:
+    description: Бросок игрального кубика (кости)
+    aliases: [dice]
+  coin:
+    description: Подбросить монетку (Орел или Решка)
+    aliases: [flip, toss]
+  mail:
+    description: Отправка и чтение писем оффлайн-игрокам
+    aliases: [email, letter]
+  chunk:
+    description: Подсветка границ текущего чанка частицами
+    aliases: [chunkborder, chunkborders, cb]
+  ruler:
+    description: Рулетка и замер расстояния между блоками
+    aliases: [measure]
+  grave:
+    description: Просмотр координат ваших могил
+    aliases: [graves]
 
 permissions:
   remotweaks.sit:

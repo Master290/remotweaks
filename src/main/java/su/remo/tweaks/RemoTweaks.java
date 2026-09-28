@@ -5,9 +5,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import su.remo.tweaks.commands.*;
 import su.remo.tweaks.listeners.*;
 import su.remo.tweaks.managers.AFKManager;
+import su.remo.tweaks.managers.GraveManager;
 import su.remo.tweaks.managers.LockManager;
+import su.remo.tweaks.managers.MailManager;
 import su.remo.tweaks.managers.MsgManager;
 import su.remo.tweaks.managers.PrefixManager;
+import su.remo.tweaks.managers.RulerManager;
 import su.remo.tweaks.managers.SitManager;
 import su.remo.tweaks.managers.SleepManager;
 import su.remo.tweaks.managers.TabListManager;
@@ -24,6 +27,10 @@ public class RemoTweaks extends JavaPlugin {
     private PrefixManager prefixManager;
     private MsgManager msgManager;
     private LockManager lockManager;
+    private MailManager mailManager;
+    private GraveManager graveManager;
+    private RulerManager rulerManager;
+    private ChunkBorderCommand chunkBorderCommand;
     private ShulkerQuickOpenListener shulkerQuickOpenListener;
     private FastLeafDecayListener fastLeafDecayListener;
 
@@ -43,6 +50,9 @@ public class RemoTweaks extends JavaPlugin {
         this.tabListManager = new TabListManager(this);
         this.msgManager = new MsgManager(this);
         this.lockManager = new LockManager(this);
+        this.mailManager = new MailManager(this);
+        this.graveManager = new GraveManager(this);
+        this.rulerManager = new RulerManager(this);
 
         // Регистрация слушателей событий
         var pm = getServer().getPluginManager();
@@ -55,7 +65,10 @@ public class RemoTweaks extends JavaPlugin {
         pm.registerEvents(new PlayerRideListener(this), this);
         pm.registerEvents(new DoubleDoorListener(this), this);
         pm.registerEvents(new HarvestListener(this), this);
-        pm.registerEvents(new DeathListener(this), this);
+        pm.registerEvents(new DeathListener(this, graveManager), this);
+        pm.registerEvents(new GraveListener(this, graveManager), this);
+        pm.registerEvents(new MailListener(this, mailManager), this);
+        pm.registerEvents(new RulerListener(this, rulerManager), this);
         pm.registerEvents(new PetProtectionListener(this), this);
         pm.registerEvents(new ArmorStandEditorListener(this), this);
         pm.registerEvents(new TradeListener(this), this);
@@ -90,17 +103,17 @@ public class RemoTweaks extends JavaPlugin {
             getCommand("trade").setTabCompleter(tradeCmd);
         }
         if (getCommand("sort") != null) {
-            var sortCmd = new su.remo.tweaks.commands.SortCommand(this);
+            var sortCmd = new SortCommand(this);
             getCommand("sort").setExecutor(sortCmd);
             getCommand("sort").setTabCompleter(sortCmd);
         }
         if (getCommand("bottle") != null) {
-            var bottleCmd = new su.remo.tweaks.commands.BottleCommand(this);
+            var bottleCmd = new BottleCommand(this);
             getCommand("bottle").setExecutor(bottleCmd);
             getCommand("bottle").setTabCompleter(bottleCmd);
         }
         if (getCommand("stats") != null) {
-            var statsCmd = new su.remo.tweaks.commands.StatsCommand(this);
+            var statsCmd = new StatsCommand(this);
             getCommand("stats").setExecutor(statsCmd);
             getCommand("stats").setTabCompleter(statsCmd);
         }
@@ -146,12 +159,45 @@ public class RemoTweaks extends JavaPlugin {
             getCommand("lock").setExecutor(lockCmd);
             getCommand("lock").setTabCompleter(lockCmd);
         }
+        DiceCommand diceCmd = new DiceCommand(this);
+        for (String dCmd : java.util.List.of("roll", "coin")) {
+            if (getCommand(dCmd) != null) {
+                getCommand(dCmd).setExecutor(diceCmd);
+                getCommand(dCmd).setTabCompleter(diceCmd);
+            }
+        }
+        if (getCommand("mail") != null) {
+            var mailCmd = new MailCommand(this, mailManager);
+            getCommand("mail").setExecutor(mailCmd);
+            getCommand("mail").setTabCompleter(mailCmd);
+        }
+        this.chunkBorderCommand = new ChunkBorderCommand(this);
+        if (getCommand("chunk") != null) {
+            getCommand("chunk").setExecutor(chunkBorderCommand);
+            getCommand("chunk").setTabCompleter(chunkBorderCommand);
+        }
+        if (getCommand("ruler") != null) {
+            var rulerCmd = new RulerCommand(this, rulerManager);
+            getCommand("ruler").setExecutor(rulerCmd);
+            getCommand("ruler").setTabCompleter(rulerCmd);
+        }
+        if (getCommand("grave") != null) {
+            var graveCmd = new GraveCommand(this, graveManager);
+            getCommand("grave").setExecutor(graveCmd);
+            getCommand("grave").setTabCompleter(graveCmd);
+        }
 
         getLogger().info("RemoTweaks успешно запущен! Все Vanilla+ функции активированы.");
     }
 
     @Override
     public void onDisable() {
+        if (chunkBorderCommand != null) {
+            chunkBorderCommand.cleanup();
+        }
+        if (graveManager != null) {
+            graveManager.cleanup();
+        }
         if (shulkerQuickOpenListener != null) {
             shulkerQuickOpenListener.cleanupAll();
         }
@@ -218,6 +264,18 @@ public class RemoTweaks extends JavaPlugin {
 
     public LockManager getLockManager() {
         return lockManager;
+    }
+
+    public MailManager getMailManager() {
+        return mailManager;
+    }
+
+    public GraveManager getGraveManager() {
+        return graveManager;
+    }
+
+    public RulerManager getRulerManager() {
+        return rulerManager;
     }
 
     public String color(String message) {

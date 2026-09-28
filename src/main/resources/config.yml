@@ -143,48 +143,63 @@ fast-leaf-decay:
 # 26. Настройки Tab-листа (название сервера и цифровой пинг)
 tablist:
   enabled: true
-  # Интервал обновления в тиках (20 тиков = 1 секунда)
   update-interval: 20
-  # Шапка (Header) таба
   header:
     - ""
     - "<bold><gradient:#FFAA00:#FF5500>✦ REMO SMP ✦</gradient></bold>"
     - "<gray>Ванильное выживание нового поколения</gray>"
     - ""
-  # Подвал (Footer) таба
   footer:
     - ""
     - "<gray>Онлайн: <gold>{online}</gold>/<gold>{max}</gold>  •  Ваш пинг: {ping_color}{ping} ms{/ping_color}<gray>  •  TPS: <green>{tps}</green></gray>"
     - "<dark_gray>remo.su</dark_gray>"
     - ""
-  # Цифровой пинг рядом со столбиком пинга в табе (Scoreboard DisplaySlot.PLAYER_LIST)
   ping-score:
     enabled: true
-    # Формат: "NUMBER_MS" (например: 24ms) или "NUMBER" (например: 24)
     format: "NUMBER_MS"
-  # Дополнительное отображение пинга в нике игрока
   player-format:
     show-ping-in-name: false
 
 # 27. Настройки префиксов и суффиксов игроков (/prefix, /suffix, /glow)
 prefixes:
-  # Отображать ли префиксы в чате (формат: <префикс><ник><суффикс>: <сообщение>)
   chat-format: true
-  # Отображать ли префиксы над головой игрока (в 3D мире)
   nametag-format: true
 
 # 28. Разделение чата: Локальный + Глобальный
 chat:
   local-global:
     enabled: true
-    # Радиус локального чата в блоках (сообщение без !)
     radius: 100.0
 
 # 29. Защита сундуков и контейнеров табличками (Lockette / [Приват])
 locks:
   enabled: true
-  # Защищать ли заблокированные сундуки от вытягивания предметов чужими воронками
   protect-hoppers: true
+
+# 30. Кости и монетка (/roll, /coin)
+dice:
+  enabled: true
+  radius: 35.0
+
+# 31. Оффлайн-почта (/mail)
+mail:
+  enabled: true
+  notify-on-join: true
+
+# 32. Могилы при смерти (Graves)
+graves:
+  enabled: true
+  safe-spawn: true
+
+# 33. Визуализатор границ чанков (/chunk)
+chunk-borders:
+  enabled: true
+  duration-seconds: 25
+
+# 34. Рулетка и линейка расстояний (/ruler)
+ruler:
+  enabled: true
+  allow-stick-sneak: true
 
 # Общие сообщения
 messages:
