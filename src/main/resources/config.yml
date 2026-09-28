@@ -140,6 +140,32 @@ fast-leaf-decay:
   spawn-particles: true
   play-sound: true
 
+# 26. Настройки Tab-листа (название сервера и цифровой пинг)
+tablist:
+  enabled: true
+  # Интервал обновления в тиках (20 тиков = 1 секунда)
+  update-interval: 20
+  # Шапка (Header) таба
+  header:
+    - ""
+    - "<bold><gradient:#FFAA00:#FF5500>✦ REMO SMP ✦</gradient></bold>"
+    - "<gray>Ванильное выживание нового поколения</gray>"
+    - ""
+  # Подвал (Footer) таба
+  footer:
+    - ""
+    - "<gray>Онлайн: <gold>{online}</gold>/<gold>{max}</gold>  •  Ваш пинг: {ping_color}{ping} ms</color>  •  TPS: <green>{tps}</green></gray>"
+    - "<dark_gray>remo.su</dark_gray>"
+    - ""
+  # Цифровой пинг рядом со столбиком пинга в табе (Scoreboard DisplaySlot.PLAYER_LIST)
+  ping-score:
+    enabled: true
+    # Формат: "NUMBER_MS" (например: 24ms) или "NUMBER" (например: 24)
+    format: "NUMBER_MS"
+  # Дополнительное отображение пинга в нике игрока
+  player-format:
+    show-ping-in-name: false
+
 # Общие сообщения
 messages:
   no-permission: "&cУ вас нет прав для выполнения этой команды!"

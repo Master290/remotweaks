@@ -27,6 +27,9 @@ public class RemoTweaksCommand implements CommandExecutor, TabCompleter {
 
         if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
             plugin.reloadConfig();
+            if (plugin.getTabListManager() != null) {
+                plugin.getTabListManager().reload();
+            }
             sender.sendMessage(plugin.color(plugin.getConfig().getString("messages.reload-success", "&aКонфигурация RemoTweaks успешно перезагружена!")));
             return true;
         }

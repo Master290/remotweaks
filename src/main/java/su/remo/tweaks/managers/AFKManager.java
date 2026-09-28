@@ -56,13 +56,21 @@ public class AFKManager {
         UUID uuid = player.getUniqueId();
         if (afk) {
             afkPlayers.add(uuid);
-            player.playerListName(Component.text("[AFK] ", NamedTextColor.GRAY)
-                    .append(Component.text(player.getName(), NamedTextColor.WHITE)));
+            if (plugin.getTabListManager() != null) {
+                plugin.getTabListManager().updatePlayerName(player);
+            } else {
+                player.playerListName(Component.text("[AFK] ", NamedTextColor.GRAY)
+                        .append(Component.text(player.getName(), NamedTextColor.WHITE)));
+            }
 
             Bukkit.broadcastMessage(plugin.color("&7[RemoTweaks] &e" + player.getName() + " &7отошел от компьютера (AFK)."));
         } else {
             afkPlayers.remove(uuid);
-            player.playerListName(null);
+            if (plugin.getTabListManager() != null) {
+                plugin.getTabListManager().updatePlayerName(player);
+            } else {
+                player.playerListName(null);
+            }
 
             Bukkit.broadcastMessage(plugin.color("&7[RemoTweaks] &e" + player.getName() + " &aвернулся в игру!"));
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 0.5f, 1.2f);

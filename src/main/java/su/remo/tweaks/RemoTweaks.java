@@ -9,6 +9,7 @@ import su.remo.tweaks.listeners.*;
 import su.remo.tweaks.managers.AFKManager;
 import su.remo.tweaks.managers.SitManager;
 import su.remo.tweaks.managers.SleepManager;
+import su.remo.tweaks.managers.TabListManager;
 import su.remo.tweaks.managers.TradeManager;
 
 public class RemoTweaks extends JavaPlugin {
@@ -18,6 +19,7 @@ public class RemoTweaks extends JavaPlugin {
     private SleepManager sleepManager;
     private TradeManager tradeManager;
     private AFKManager afkManager;
+    private TabListManager tabListManager;
     private ShulkerQuickOpenListener shulkerQuickOpenListener;
     private FastLeafDecayListener fastLeafDecayListener;
 
@@ -33,9 +35,11 @@ public class RemoTweaks extends JavaPlugin {
         this.afkManager = new AFKManager(this);
         this.sleepManager = new SleepManager(this);
         this.tradeManager = new TradeManager(this);
+        this.tabListManager = new TabListManager(this);
 
         // Регистрация слушателей событий
         var pm = getServer().getPluginManager();
+        pm.registerEvents(new TabListListener(this), this);
         pm.registerEvents(new SitListener(this), this);
         pm.registerEvents(new ItemFrameListener(this), this);
         pm.registerEvents(new SleepListener(this), this);
@@ -112,11 +116,18 @@ public class RemoTweaks extends JavaPlugin {
         if (afkManager != null) {
             afkManager.cleanup();
         }
+        if (tabListManager != null) {
+            tabListManager.cleanup();
+        }
         getLogger().info("RemoTweaks выключен. Все активные сессии очищены.");
     }
 
     public static RemoTweaks getInstance() {
         return instance;
+    }
+
+    public TabListManager getTabListManager() {
+        return tabListManager;
     }
 
     public FastLeafDecayListener getFastLeafDecayListener() {
